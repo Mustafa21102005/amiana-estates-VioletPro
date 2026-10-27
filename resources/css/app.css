@@ -1,0 +1,129 @@
+:root {
+    --navy: 2 14 38; /* #020E26 logo navy  */
+    --gold: 207 166 88; /* #CFA658 logo gold  */
+    --ivory: 248 245 239; /* #F8F5EF warm ivory     */
+    --mist: 143 166 184; /* #8FA6B8 glass blue-gray */
+    --charcoal: 28 28 30; /* #1C1C1E body text      */
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none !important;
+}
+
+html {
+    color-scheme: light;
+    scrollbar-width: auto;
+    scrollbar-gutter: stable;
+}
+
+html.dark {
+    color-scheme: dark;
+    --scroll-track: 11 36 71; /* a step lighter than the navy page */
+}
+
+/* ---------- Scrollbar ---------- */
+:root {
+    --scroll-thumb: 207 166 88; /* #CFA658 gold */
+    --scroll-track: 237 232 220; /* slightly deeper than ivory, so the groove shows */
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--scroll-thumb)) rgb(var(--scroll-track));
+}
+
+@layer utilities {
+    .scrollbar-dark {
+        scrollbar-color: rgb(var(--scroll-thumb)) rgb(11 36 71);
+    }
+}
+
+/* Older browsers that don't know the standard properties */
+@supports not (scrollbar-color: auto) {
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: rgb(var(--scroll-track));
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgb(var(--scroll-thumb));
+        border: 2px solid rgb(var(--scroll-track));
+        border-radius: 9999px;
+    }
+}
+
+/* ---------- Video player sliders ---------- */
+.player-range {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 1.25rem; /* a generous tap target around a thin line */
+    background: transparent;
+    cursor: pointer;
+}
+
+.player-range:focus {
+    outline: none;
+}
+
+/* The filled part is drawn by a gradient that follows the --fill variable the player sets */
+.player-range::-webkit-slider-runnable-track {
+    height: 3px;
+    background: linear-gradient(
+        to right,
+        rgb(var(--gold)) var(--fill, 0%),
+        rgb(255 255 255 / 0.25) var(--fill, 0%)
+    );
+}
+
+.player-range::-moz-range-track {
+    height: 3px;
+    background: rgb(255 255 255 / 0.25);
+}
+
+.player-range::-moz-range-progress {
+    height: 3px;
+    background: rgb(var(--gold));
+}
+
+.player-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0.9rem;
+    height: 0.9rem;
+    margin-top: -0.35rem; /* centres the thumb on the 3px line */
+    border: 0;
+    border-radius: 9999px;
+    background: rgb(var(--gold));
+    transition: transform 0.15s;
+}
+
+.player-range::-moz-range-thumb {
+    width: 0.9rem;
+    height: 0.9rem;
+    border: 0;
+    border-radius: 9999px;
+    background: rgb(var(--gold));
+}
+
+.player-range:hover::-webkit-slider-thumb,
+.player-range:focus-visible::-webkit-slider-thumb {
+    transform: scale(1.25);
+}
+
+.player-range:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid rgb(var(--ivory));
+    outline-offset: 2px;
+}
+
+.player-range:focus-visible::-moz-range-thumb {
+    outline: 2px solid rgb(var(--ivory));
+    outline-offset: 2px;
+}
